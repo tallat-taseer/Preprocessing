@@ -1,0 +1,20 @@
+import pandas as pd
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+
+# Load the dataset
+df = pd.read_csv("train.csv")
+
+# Drop the 'id' column
+df.drop('id', axis=1, inplace=True)
+
+# Encode the 'Sex' column
+label_encoder = LabelEncoder()
+df['Sex'] = label_encoder.fit_transform(df['Sex'])  # male=1, female=0
+
+# Standardize numeric features
+scaler = StandardScaler()
+numeric_cols = ['Age', 'Height', 'Weight', 'Duration', 'Heart_Rate', 'Body_Temp', 'Calories']
+df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
+
+# Show the first few rows of the preprocessed data
+print(df.head())
